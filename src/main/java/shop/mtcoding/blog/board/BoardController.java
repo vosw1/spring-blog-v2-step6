@@ -38,7 +38,9 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String detail(@PathVariable Integer id) { // Integer : 없으면 null, int : 0
+    public String detail(@PathVariable Integer id, HttpServletRequest request) { // Integer : 없으면 null, int : 0
+        Board board = boardNativeRepository.findById(id);
+        request.setAttribute("board", board);
         return "board/detail";
     }
 }
