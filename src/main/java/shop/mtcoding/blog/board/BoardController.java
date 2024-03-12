@@ -16,8 +16,21 @@ public class BoardController {
 
     private final BoardNativeRepository boardNativeRepository;
 
+    @PostMapping("/board/{id}/update")
+    public String update(@PathVariable Integer id, String title, String content, String username){
+        boardNativeRepository.updateById(id, title, content, username);
+        return "redirect:/board/"+id;
+    }
+
+    @GetMapping("/board/{id}/update-form")
+    public String updateForm(@PathVariable (name="id") Integer id, HttpServletRequest request) {
+        Board board = boardNativeRepository.findById(id);
+        request.setAttribute("board", board);
+        return "/board/update-form"; // 서버가 내부적으로 index를 요청 - 외부에서는 다이렉트 접근이 안됨
+    }
+
     @PostMapping("/board/{id}/delete")
-    public String delete(@PathVariable int id) { // DTO 없이 구현
+    public String delete(@PathVariable Integer id) { // DTO 없이 구현
         boardNativeRepository.deleteById(id);
         return "redirect:/";
     }
