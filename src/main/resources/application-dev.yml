@@ -3,4 +3,4 @@ server:
     encoding:
       charset: utf-8
       force: true
-  port: 8080
+#  port: 8080 기본 셋팅이 8080
