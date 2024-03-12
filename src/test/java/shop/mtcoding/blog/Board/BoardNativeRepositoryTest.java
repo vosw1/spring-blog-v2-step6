@@ -10,6 +10,8 @@ import shop.mtcoding.blog.board.BoardNativeRepository;
 
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 @Import(BoardNativeRepository.class)
 @DataJpaTest
 public class BoardNativeRepositoryTest {
@@ -45,5 +47,18 @@ public class BoardNativeRepositoryTest {
         //org.assertj.core.api
         Assertions.assertThat(boardList.size()).isEqualTo(4);
         Assertions.assertThat(boardList.get(2).getUsername()).isEqualTo("ssar");
+    }
+
+    @Test
+    public void deleteById_test(){
+        // given
+        int id = 1;
+
+        // when
+        boardNativeRepository.deleteById(id);
+
+        // then
+        List<Board> boardList = boardNativeRepository.findAll();
+        assertThat(boardList.size()).isEqualTo(2);
     }
 }

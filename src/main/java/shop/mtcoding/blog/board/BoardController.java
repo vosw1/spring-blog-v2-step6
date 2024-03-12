@@ -16,6 +16,12 @@ public class BoardController {
 
     private final BoardNativeRepository boardNativeRepository;
 
+    @PostMapping("/board/{id}/delete")
+    public String delete(@PathVariable int id) { // DTO 없이 구현
+        boardNativeRepository.deleteById(id);
+        return "redirect:/";
+    }
+
     @GetMapping("/")
     public String index(HttpServletRequest request) {
         // 조회하기
