@@ -1,5 +1,6 @@
 package shop.mtcoding.blog.Board;
 
+import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import shop.mtcoding.blog.board.BoardPersistRepository;
 
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 @Import(BoardPersistRepository.class)
 @DataJpaTest
@@ -18,6 +21,35 @@ public class BoardPersistRepositoryTest {
 
     @Autowired //DI
     private BoardPersistRepository boardPersistRepository;
+
+    @Autowired
+    private EntityManager em;
+
+    @Test
+    public void deleteByIdv2_test(){
+        // given
+        int id = 1;
+
+        // when
+        boardPersistRepository.deleteByIdv2(id);
+
+        em.flush(); // 버퍼에 쥐고 있는 쿼리를 즉시 전송
+    }
+
+    @Test
+    public void deleteById_test(){
+        // given
+        int id = 5;
+
+        // when
+        Board board = boardPersistRepository.findById(id);
+        em.clear(); // PC를 다 비우는 것
+        boardPersistRepository.deleteById(id);
+
+        // then
+        List<Board> boardList = boardPersistRepository.findAll();
+        System.out.println("deleteById_test/size : " + boardList.size());
+    }
 
     @Test
     public void findById_test() {
