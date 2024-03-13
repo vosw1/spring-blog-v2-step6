@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.lang.annotation.Native;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardNativeRepository boardNativeRepository;
+    private final BoardPersistRepository boardPersistRepository;
 
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id, String title, String content, String username){
@@ -38,7 +40,7 @@ public class BoardController {
     @GetMapping("/")
     public String index(HttpServletRequest request) {
         // 조회하기
-        List<Board> boardList = boardNativeRepository.findAll();
+        List<Board> boardList = boardPersistRepository.findAll();
         // 가방에 담기
         request.setAttribute("boardList", boardList);
 
@@ -46,8 +48,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/save")
-    public String save(String title, String content, String username) { // DTO 없이 구현
-        boardNativeRepository.save(title, content, username);
+    public String save(BoardRequest.SaveDTO reqDTO) { // DTO 없이 구현
+        boardPersistRepository.save(reqDTO.toEntity());
         return "redirect:/";
     }
 
