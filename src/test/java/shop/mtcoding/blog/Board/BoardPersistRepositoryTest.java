@@ -20,6 +20,16 @@ public class BoardPersistRepositoryTest {
     private BoardPersistRepository boardPersistRepository;
 
     @Test
+    public void findById_test() {
+        //given
+        int id = 1;
+        //when
+        Board board = boardPersistRepository.findById(id);
+        boardPersistRepository.findById(id);
+        System.out.println("findById_test : " + board);
+    }
+
+    @Test
     public void findAll_test() {
         //given - 지금은 넣을게 없음
 
