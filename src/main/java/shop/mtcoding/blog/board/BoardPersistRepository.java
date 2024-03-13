@@ -13,19 +13,19 @@ import java.util.List;
 public class BoardPersistRepository {
     private final EntityManager em;
 
-    @Transactional
-    public void deleteByIdv2(Integer id) {
-        Board board = findById(id);
-        em.remove(board); // PC에 객체를 지우고, (트랜잭션 종료 시) 삭제 쿼리를 전송함
-    }
-
 //    @Transactional
-//    public void deleteById(Integer id) {
-//        Query query = em.createNativeQuery("delete from Board b where b.id = ?");
-//        query.setParameter(1, id);
-//
-//        query.executeUpdate();
+//    public void deleteByIdv2(Integer id) {
+//        Board board = findById(id);
+//        em.remove(board); // PC에 객체를 지우고, (트랜잭션 종료 시) 삭제 쿼리를 전송함
 //    }
+
+    @Transactional
+    public void deleteById(Integer id) {
+        Query query = em.createQuery("delete from Board b where b.id = :id");
+        query.setParameter("id", id);
+
+        query.executeUpdate();
+    }
 
     public Board findById(Integer id) {
         Board board = em.find(Board.class, id); // (class명, PK)
