@@ -30,6 +30,13 @@ public class Board {
         this.username = username;
     }
 
+    // 다른 곳에서 재사용하려면 DTO이름을 적어둘 수 없음
+    public void update(BoardRequest.UpdateDTO reqDTO) { // 변경할 데이터를 설정할 setter 만들기
+        this.title = reqDTO.getTitle();
+        this.content = reqDTO.getContent();
+        this.username = reqDTO.getUsername();
+    }
+
     public String getBoardDate(){
         return MyDateUtil.timestampFormat(createdAt);
     }

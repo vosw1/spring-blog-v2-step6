@@ -13,6 +13,12 @@ import java.util.List;
 public class BoardPersistRepository {
     private final EntityManager em;
 
+    @Transactional
+    public void updateById(int id,BoardRequest.UpdateDTO reqDTO) {
+        Board board = findById(id); // 영속화됨
+        board.update(reqDTO);
+    }// 더티체킹
+
 //    @Transactional
 //    public void deleteByIdv2(Integer id) {
 //        Board board = findById(id);

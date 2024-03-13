@@ -26,15 +26,29 @@ public class BoardPersistRepositoryTest {
     private EntityManager em;
 
     @Test
-    public void deleteByIdv2_test(){
-        // given
+    public void updateById_test(){
+        //given
         int id = 1;
-
-        // when
-        boardPersistRepository.deleteByIdv2(id);
-
-        em.flush(); // 버퍼에 쥐고 있는 쿼리를 즉시 전송
+        String title = "제목수정1";
+        //when
+        Board board = boardPersistRepository.findById(id);
+        System.out.println("updateById_test findById : " + board);
+        board.setTitle(title); // PC에 있는 값을 변경
+        //then
+        em.flush();
+        System.out.println("updateById_test updateById : " + board);
     }
+
+//    @Test
+//    public void deleteByIdv2_test(){
+//        // given
+//        int id = 1;
+//
+//        // when
+//        boardPersistRepository.deleteByIdv2(id);
+//
+//        em.flush(); // 버퍼에 쥐고 있는 쿼리를 즉시 전송
+//    }
 
     @Test
     public void deleteById_test(){
