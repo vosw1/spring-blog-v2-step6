@@ -22,6 +22,24 @@ public class BoardRepositoryTest {
     private EntityManager em;
 
     @Test
+    public void findAllV3_test(){
+        List<Board> boardList = boardRepository.findAllV2();
+        System.out.println("findAllV3_test : 조회완료 쿼리 2번");
+        boardList.forEach(board -> {
+            System.out.println(board);
+        });
+    }
+
+    @Test
+    public void findAllV2_test(){
+        List<Board> boardList = boardRepository.findAllV2();
+        System.out.println("findAllV2_test : 조회완료 쿼리 2번");
+        boardList.forEach(board -> {
+            System.out.println(board);
+        });
+    }
+
+    @Test
     public void findAll_inqueryv2_test() {
         String q = "SELECT DISTINCT b FROM Board b JOIN FETCH b.user";
         List<Board> boards = em.createQuery(q, Board.class).getResultList();
