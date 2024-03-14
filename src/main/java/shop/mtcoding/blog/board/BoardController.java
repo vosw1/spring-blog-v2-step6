@@ -36,7 +36,8 @@ public class BoardController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request) {
-
+        List<Board> boardList = boardRepository.findAll();
+        request.setAttribute("boardList", boardList);
         return "index"; // 서버가 내부적으로 index를 요청 - 외부에서는 다이렉트 접근이 안됨
     }
 
@@ -52,8 +53,8 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public String detail(@PathVariable Integer id, HttpServletRequest request) { // Integer : 없으면 null, int : 0
-       Board board = boardRepository.findByIdJoinUser(id);
-       request.setAttribute("board", board);
+        Board board = boardRepository.findByIdJoinUser(id);
+        request.setAttribute("board", board);
         return "board/detail";
     }
 }
