@@ -23,12 +23,15 @@ public class BoardController {
 
     // @Transactional 트랜잭션 시간이 너무 길어져서 service에 넣어야함
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable Integer id) {
+    public String update(@PathVariable Integer id, String title, String content) {
+        boardRepository.updateById(id, title, content);
         return "redirect:/board/" + id;
     }
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable(name = "id") Integer id, HttpServletRequest request) {
+        Board board = boardRepository.findById(id);
+        request.setAttribute("board", board);
         return "/board/update-form"; // 서버가 내부적으로 index를 요청 - 외부에서는 다이렉트 접근이 안됨
     }
 

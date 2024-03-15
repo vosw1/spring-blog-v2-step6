@@ -31,6 +31,10 @@ public class Board {
     @CreationTimestamp // PC로 인해 DB에 INSERT될 때 날짜 주입
     private Timestamp createdAt;
 
+    public void update(){
+
+    }
+
     @Builder
     public Board(Integer id, String title, String content, User user, Timestamp createdAt) {
         this.id = id;

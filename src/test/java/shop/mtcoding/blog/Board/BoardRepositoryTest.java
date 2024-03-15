@@ -22,6 +22,19 @@ public class BoardRepositoryTest {
     private EntityManager em;
 
     @Test
+    public void updateById_test(){
+        // given
+        int id  = 1;
+        String title = "수정제목1";
+        String content = "수정내용1";
+        // when
+        boardRepository.updateById(id, title, content); // delete 쿼리 발동
+        em.flush();
+        // then
+        System.out.println("updateById_test : " + boardRepository.findById(id));
+    }
+
+    @Test
     public void deleteById_test(){
         // given
         int id  = 1;

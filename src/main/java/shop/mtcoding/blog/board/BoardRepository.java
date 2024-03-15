@@ -16,15 +16,25 @@ import java.util.Set;
 public class BoardRepository {
     private final EntityManager em;
 
+    // update board_tb set title =? where id=?
+    // update board_tb set content =? where id=?
+    // update board_tb set title =?, content =?  where id=?
     @Transactional
-    public void deleteById(int id){
+    public void updateById(int id, String title, String content) { // DTO를 안만들고 꺼내서 넘겨도 됨 -> 재사용 가능
+        Board board = findById(id);
+        board.setTitle(title);
+        board.setContent(content);
+    } // 더티체킹
+
+    @Transactional
+    public void deleteById(int id) {
         Query query = em.createQuery("delete from Board b where b.id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
     }
 
     @Transactional
-    public void save(Board board){
+    public void save(Board board) {
         em.persist(board);
     }
 
