@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.user.User;
-import shop.mtcoding.blog.util.MyDateUtil;
+import shop.mtcoding.blog._core.utils.MyDateUtil;
 
 import java.sql.Timestamp;
 

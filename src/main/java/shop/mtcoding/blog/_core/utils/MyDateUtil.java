@@ -1,4 +1,4 @@
-package shop.mtcoding.blog.util;
+package shop.mtcoding.blog._core.utils;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 

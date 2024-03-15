@@ -2,11 +2,12 @@ package shop.mtcoding.blog.user;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import shop.mtcoding.blog._core.utils.exception.Exception400;
+import shop.mtcoding.blog._core.utils.exception.Exception401;
 
 @RequiredArgsConstructor
 @Controller
@@ -51,6 +52,11 @@ public class UserController {
     @GetMapping("/user/update-form") // session(mypage)에 있으니 id가 필요 없음
     public String updateForm(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
+
+        if(sessionUser == null) {
+            throw new Exception401("인증되지 않았어요. 로그인해주세요");
+        }
+
         User user = userRepository.findById(sessionUser.getId()); // 없어도 상관은 없음
         request.setAttribute("user", user);
         return "user/update-form";
