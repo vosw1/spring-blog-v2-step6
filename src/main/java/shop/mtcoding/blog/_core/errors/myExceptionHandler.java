@@ -39,11 +39,5 @@ public class myExceptionHandler {
         return "errors/500";
     }
 
-    @ExceptionHandler(Exception.class)
-    public String exUnKnown(RuntimeException e){
-        // DB에 에러 로그 남기기
-        // 관리자에게 알리기
-        // 이메일 보내기
-        return "errors/unKnown";
-    }
+
 }
