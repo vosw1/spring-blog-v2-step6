@@ -1,9 +1,9 @@
-package shop.mtcoding.blog._core.utils;
+package shop.mtcoding.blog._core.errors;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import shop.mtcoding.blog._core.utils.exception.*;
+import shop.mtcoding.blog._core.errors.exception.*;
 
 @ControllerAdvice // RUNTIME 예외가 터지면 여기로 오류가 모여 처리함
 public class myExceptionHandler {
