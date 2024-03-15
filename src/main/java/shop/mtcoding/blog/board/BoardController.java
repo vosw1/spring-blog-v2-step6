@@ -23,8 +23,8 @@ public class BoardController {
 
     // @Transactional 트랜잭션 시간이 너무 길어져서 service에 넣어야함
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable Integer id, String title, String content) {
-        boardRepository.updateById(id, title, content);
+    public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
+        boardRepository.updateById(id, reqDTO.getTitle(), reqDTO.getContent());
         return "redirect:/board/" + id;
     }
 
