@@ -69,11 +69,10 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public @ResponseBody BoardResponse.DetailDTO detail(@PathVariable Integer id, HttpServletRequest request) {
+    public String detail(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        return boardService.detail(id, sessionUser);
-//        request.setAttribute("isOwner", isOwner);
-//        request.setAttribute("board", board);
-//        return "board/detail";
+        Board board = boardService.detail(id, sessionUser);
+        request.setAttribute("board", board);
+        return "board/detail";
     }
 }

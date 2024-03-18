@@ -18,17 +18,22 @@ public class BoardService {
 
 
     // board와 isOwner를 응답해야하나 method는 하나밖에 응답할 수 없음 -> 하나의 덩어리로 만들어서 줘야 함
-    public BoardResponse.DetailDTO detail(int boardId, User sessionUser) {
+    public Board detail(int boardId, User sessionUser) {
         Board board = boardJPARepository.findByIdJoinUser(boardId)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다"));
 
-        // 로그인을 하고, 게시글의 주인이면 isOwner가 true가 된다.
-
-        return new BoardResponse.DetailDTO(board, sessionUser);
+        boolean isOwner = false;
+        if(sessionUser != null){
+            if(sessionUser.getId() == board.getUser().getId()){
+                isOwner = true;
+            }
+        }
+        board.setOwner(isOwner);
+        return board;
     }
 
     public List<Board> findAll() {
-        Sort sort = Sort.by(Sort.Direction.DESC,"id");
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
         return boardJPARepository.findAll(sort);
     }
 
@@ -51,7 +56,7 @@ public class BoardService {
         board.setContent(reqDTO.getContent());
     }
 
-    public Board updateForm (int boardId, int sessionUserId) {
+    public Board updateForm(int boardId, int sessionUserId) {
         // 1. 조회 및 예외처리
         Board board = boardJPARepository.findById(boardId)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다"));
