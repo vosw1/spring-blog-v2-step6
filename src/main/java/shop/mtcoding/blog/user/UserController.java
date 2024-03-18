@@ -17,33 +17,28 @@ import shop.mtcoding.blog._core.errors.exception.Exception401;
 @Controller
 public class UserController {
 
-    private final UserRepository userRepository;
     private final UserService userService;
     private final HttpSession session;
 
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO reqDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        User newSessionUser = userRepository.updateById(sessionUser.getId(), reqDTO.getPassword(), reqDTO.getEmail());
+        User newSessionUser = userService.update(sessionUser.getId(), reqDTO);
         session.setAttribute("sessionUser", newSessionUser);
         return "redirect:/";
     }
 
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO reqDTO) {
-        userService.Join(reqDTO);
+        userService.join(reqDTO);
         return "redirect:/";
     }
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
-        try{
-            User sessionUser = userRepository.findByUsernameAndPassword(reqDTO);
-            session.setAttribute("sessionUser", sessionUser);
+        User sessionUser = userService.login(reqDTO);
+        session.setAttribute("sessionUser", sessionUser);
             return "redirect:/";
-        }catch (EmptyResultDataAccessException e) {
-            throw new Exception401("유저네임 혹은 비밀번호가 틀렸어요");
-        }
     }
 
     @GetMapping("/join-form")
@@ -59,7 +54,7 @@ public class UserController {
     @GetMapping("/user/update-form") // session(mypage)에 있으니 id가 필요 없음
     public String updateForm(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser"); // 절대 nu
-        User user = userRepository.findById(sessionUser.getId()); // 없어도 상관은 없음
+        User user = userService.updateForm(sessionUser.getId()); // 없어도 상관은 없음
         request.setAttribute("user", user);
         return "user/update-form";
     }
