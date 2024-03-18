@@ -26,7 +26,7 @@ public class UserRepository {
         return user;
     }
 
-    @Transactional
+    // SERVICE에서 트랜잭션 관리를 해야 함
     public User save(User user){
         em.persist(user);
         return user;

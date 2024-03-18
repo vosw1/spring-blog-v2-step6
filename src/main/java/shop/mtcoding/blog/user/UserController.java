@@ -18,6 +18,7 @@ import shop.mtcoding.blog._core.errors.exception.Exception401;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
     private final HttpSession session;
 
     @PostMapping("/user/update")
@@ -30,11 +31,7 @@ public class UserController {
 
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO reqDTO) {
-        try {
-            userRepository.save(reqDTO.toEntity());
-        } catch (DataIntegrityViolationException e){
-            throw new Exception400("동일한 유저네임이 존재합니다.");
-        }
+        userService.Join(reqDTO);
         return "redirect:/";
     }
 
