@@ -21,7 +21,6 @@ import java.util.List;
 @Controller
 public class BoardController {
 
-    private final BoardRepository boardRepository;
     private final HttpSession session;
     private final BoardService boardService;
 
