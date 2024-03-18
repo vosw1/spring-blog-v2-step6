@@ -22,26 +22,21 @@ public class BoardController {
 
     private final BoardRepository boardRepository;
     private final HttpSession session;
+    private final BoardService boardService;
 
     // @Transactional 트랜잭션 시간이 너무 길어져서 service에 넣어야함
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        Board board = boardRepository.findById(id);
-        if (sessionUser.getId() != board.getUser().getId()) {
-            throw new Exception403("게시글을 수정할 권한이 없습니다");
-        }
-        boardRepository.updateById(id, reqDTO.getTitle(), reqDTO.getContent());
+        boardService.update(id, sessionUser.getId(), reqDTO);
         return "redirect:/board/" + id;
     }
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable(name = "id") Integer id, HttpServletRequest request) {
-        Board board = boardRepository.findById(id);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        Board board = boardService.updateForm(id, sessionUser.getId());
 
-        if (board == null) {
-            throw new Exception404("해당 게시글을 찾을 수 없습니다");
-        }
         request.setAttribute("board", board);
         return "/board/update-form"; // 서버가 내부적으로 index를 요청 - 외부에서는 다이렉트 접근이 안됨
     }
@@ -67,7 +62,7 @@ public class BoardController {
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        boardRepository.save(reqDTO.toEntity(sessionUser));
+        boardService.save(reqDTO, sessionUser);
         return "redirect:/";
     }
 
