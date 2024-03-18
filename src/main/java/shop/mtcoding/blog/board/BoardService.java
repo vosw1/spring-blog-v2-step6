@@ -16,6 +16,17 @@ public class BoardService {
 
     private final BoardJPARepository boardJPARepository;
 
+
+    // board와 isOwner를 응답해야하나 method는 하나밖에 응답할 수 없음 -> 하나의 덩어리로 만들어서 줘야 함
+    public BoardResponse.DetailDTO detail(int boardId, User sessionUser) {
+        Board board = boardJPARepository.findByIdJoinUser(boardId)
+                .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다"));
+
+        // 로그인을 하고, 게시글의 주인이면 isOwner가 true가 된다.
+
+        return new BoardResponse.DetailDTO(board, sessionUser);
+    }
+
     public List<Board> findAll() {
         Sort sort = Sort.by(Sort.Direction.DESC,"id");
         return boardJPARepository.findAll(sort);
