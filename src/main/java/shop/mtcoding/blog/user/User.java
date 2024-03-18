@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchConnectionDetails;
 import shop.mtcoding.blog._core.utils.MyDateUtil;
 
 import java.sql.Timestamp;
@@ -25,6 +26,7 @@ public class User {
 
     @CreationTimestamp // PC로 인해 DB에 INSERT될 때 날짜 주입
     private Timestamp createdAt;
+
 
     public String getBoardDate(){
         return MyDateUtil.timestampFormat(createdAt);
