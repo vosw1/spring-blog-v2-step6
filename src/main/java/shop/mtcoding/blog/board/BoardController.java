@@ -44,17 +44,13 @@ public class BoardController {
     @PostMapping("/board/{id}/delete")
     public String delete(@PathVariable Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        Board board = boardRepository.findById(id);
-        if (sessionUser.getId() != board.getUser().getId()) {
-            throw new Exception403("게시글을 삭제할 권한이 없습니다");
-        }
-        boardRepository.deleteById(id);
+        boardService.delete(id, sessionUser.getId());
         return "redirect:/";
     }
 
     @GetMapping("/")
     public String index(HttpServletRequest request) {
-        List<Board> boardList = boardRepository.findAll();
+        List<Board> boardList = boardService.findAll();
         request.setAttribute("boardList", boardList);
         return "index"; // 서버가 내부적으로 index를 요청 - 외부에서는 다이렉트 접근이 안됨
     }
