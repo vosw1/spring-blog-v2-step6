@@ -16,7 +16,6 @@ public class BoardService {
 
     private final BoardJPARepository boardJPARepository;
 
-
     // board와 isOwner를 응답해야하나 method는 하나밖에 응답할 수 없음 -> 하나의 덩어리로 만들어서 줘야 함
     public Board detail(int boardId, User sessionUser) {
         Board board = boardJPARepository.findByIdJoinUser(boardId)

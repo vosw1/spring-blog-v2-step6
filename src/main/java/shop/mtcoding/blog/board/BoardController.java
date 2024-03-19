@@ -71,7 +71,9 @@ public class BoardController {
     public String detail(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         Board board = boardService.detail(id, sessionUser);
+
         request.setAttribute("board", board);
+        System.out.println("서버 사이드 렌더링 직전에는 Board와 User만 조회된 상태이다~~~~~~~~~~~~~~");
         return "board/detail";
     }
 }

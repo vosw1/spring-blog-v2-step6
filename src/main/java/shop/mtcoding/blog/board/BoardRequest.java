@@ -17,8 +17,7 @@ public class BoardRequest {
         private String content;
 
         // DTO를 클라이언트로 부터 받아서, PC에 전달하기 위해 사용
-        // insert하는 DTO에서만 만들기
-        public Board toEntity(User user){
+        public Board toEntity(User user) {
             return Board.builder()
                     .title(title)
                     .content(content)

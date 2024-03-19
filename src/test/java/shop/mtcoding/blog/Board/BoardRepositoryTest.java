@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import shop.mtcoding.blog.board.Board;
-import shop.mtcoding.blog.board.BoardRepository;
 import shop.mtcoding.blog.user.User;
 
 import java.util.List;
