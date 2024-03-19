@@ -33,6 +33,9 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
+    @Transient
+    private boolean isReplyOwner;
+
     @CreationTimestamp // PC로 인해 DB에 INSERT될 때 날짜 주입
     private Timestamp createdAt;
 
